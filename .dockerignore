@@ -1,3 +1,8 @@
 #Docker ignore file
-__pycache__
-*/__pycache__
+
+#ignore __pycache__ from all directories, including the root of the build
+**/__pycache__ 
+*.gitignore
+
+#__pycache__
+#*/__pycache__

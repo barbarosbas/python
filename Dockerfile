@@ -1,4 +1,5 @@
 
+#select minimal image for requirements
 FROM python:3.11-slim
 
 #set application directory
