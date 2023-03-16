@@ -13,13 +13,13 @@ try:
         HttpClass=MyHttpClass(sys.argv[1])
         #two method same ouput
         HttpFlowFromTCP=HttpClass.GetHttpFlowFromTCP()
-        #HttpFlowFromHTTP=HttpClass.GetHttpFlowFromHTTP()
+        HttpFlowFromHTTP=HttpClass.GetHttpFlowFromHTTP()
         HttpLength=HttpClass.GetHttpFlowLength()
         HttpTopHostAndCount=HttpClass.GetHttpTopHostandCount()
 
         Print =MyPrint()
         Print.PrintHttpFlow(HttpFlowFromTCP)
-        #Print.PrintHttpFlow(HttpFlowFromHTTP)
+        Print.PrintHttpFlow(HttpFlowFromHTTP)
         Print.PrintHttpLength(HttpLength)
         Print.PrintTopHost(HttpTopHostAndCount)
 

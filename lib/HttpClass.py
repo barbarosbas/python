@@ -8,7 +8,7 @@ class MyHttpClass:
         #pcap file will bu used rest of the code
         self.pcapFile=rdpcap(sourceFile)
 
-    #private method, called from GetHttpFlow method
+    #private method, called from GetHttpFlowFromTCP & GetHttpFlowFromHTTP method
     #verify whether flow is already in list or not
     def __IsFlowExist(self,flowList,tupleFlow):
         bl=True
@@ -23,6 +23,15 @@ class MyHttpClass:
                     break
         return bl
     
+    #private method, called from GetHttpFlowFromTCP & GetHttpFlowFromHTTP method
+    #verify whether flow is already in list or not
+    def __GetHTTPFlowTunnel(self,packet):
+        ip_src=packet[IP].src
+        ip_dst=packet[IP].dst
+        tcp_sport=packet[TCP].sport
+        tcp_dport=packet[TCP].dport
+        return (ip_src,tcp_sport,ip_dst,tcp_dport)
+    
 
     #return Http Flows as list from TCP
     #each item in the list is a tuple
@@ -32,11 +41,7 @@ class MyHttpClass:
         flow_list = []
         for packet in self.pcapFile:
             if packet.haslayer(TCP) and (packet.dport == 80 or packet.sport == 80  ):
-                ip_src=packet[IP].src
-                ip_dst=packet[IP].dst
-                tcp_sport=packet[TCP].sport
-                tcp_dport=packet[TCP].dport
-                flow=(ip_src,tcp_sport,ip_dst,tcp_dport) #tuple
+                flow=self.__GetHTTPFlowTunnel(packet) #tuple
                 if self.__IsFlowExist(flow_list,flow):
                     flow_list.append(flow) #list
         return flow_list
@@ -49,11 +54,7 @@ class MyHttpClass:
         flow_list = []
         for packet in self.pcapFile:
             if  packet.haslayer(HTTPRequest):
-                ip_src=packet[IP].src
-                ip_dst=packet[IP].dst
-                tcp_sport=packet[TCP].sport
-                tcp_dport=packet[TCP].dport
-                flow=(ip_src,tcp_sport,ip_dst,tcp_dport) #tuple
+                flow=self.__GetHTTPFlowTunnel(packet) #tuple
                 if self.__IsFlowExist(flow_list,flow):
                     flow_list.append(flow) #list
         return flow_list
