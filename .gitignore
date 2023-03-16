@@ -1,8 +1,8 @@
 #my custom file
 *.txt
 *.pcap
-Dockerfile
-.dockerignore
+*Dockerfile
+**/ .git
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
