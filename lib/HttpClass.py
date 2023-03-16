@@ -24,14 +24,31 @@ class MyHttpClass:
         return bl
     
 
-    #return Http Flows as list
+    #return Http Flows as list from TCP
     #each item in the list is a tuple
     #[(src_ip,src_port,dst_ip,sdt_port),(...) (...)]
-    def GetHttpFlow(self):
+    def GetHttpFlowFromTCP(self):
         # empty list to keep http flow, flow will be added as a tuple
         flow_list = []
         for packet in self.pcapFile:
             if packet.haslayer(TCP) and (packet.dport == 80 or packet.sport == 80  ):
+                ip_src=packet[IP].src
+                ip_dst=packet[IP].dst
+                tcp_sport=packet[TCP].sport
+                tcp_dport=packet[TCP].dport
+                flow=(ip_src,tcp_sport,ip_dst,tcp_dport) #tuple
+                if self.__IsFlowExist(flow_list,flow):
+                    flow_list.append(flow) #list
+        return flow_list
+    
+    #return Http Flows as list from HTTP, same output with the above method, different implementation
+    #each item in the list is a tuple
+    #[(src_ip,src_port,dst_ip,sdt_port),(...) (...)]
+    def GetHttpFlowFromHTTP(self):
+        # empty list to keep http flow, flow will be added as a tuple
+        flow_list = []
+        for packet in self.pcapFile:
+            if  packet.haslayer(HTTPRequest):
                 ip_src=packet[IP].src
                 ip_dst=packet[IP].dst
                 tcp_sport=packet[TCP].sport
@@ -65,6 +82,8 @@ class MyHttpClass:
         top_host, count = counter.most_common(1)[0]
         print(top_host)
         return (top_host,count) 
+    
+    
     
 
     
