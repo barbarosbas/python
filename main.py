@@ -11,12 +11,15 @@ try:
         print("File not found")
     else:
         HttpClass=MyHttpClass(sys.argv[1])
-        HttpFlows=HttpClass.GetHttpFlow()
+        #two method same ouput
+        HttpFlowFromTCP=HttpClass.GetHttpFlowFromTCP()
+        #HttpFlowFromHTTP=HttpClass.GetHttpFlowFromHTTP()
         HttpLength=HttpClass.GetHttpFlowLength()
         HttpTopHostAndCount=HttpClass.GetHttpTopHostandCount()
 
         Print =MyPrint()
-        Print.PrintHttpFlow(HttpFlows)
+        Print.PrintHttpFlow(HttpFlowFromTCP)
+        #Print.PrintHttpFlow(HttpFlowFromHTTP)
         Print.PrintHttpLength(HttpLength)
         Print.PrintTopHost(HttpTopHostAndCount)
 
