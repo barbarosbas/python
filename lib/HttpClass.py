@@ -81,7 +81,6 @@ class MyHttpClass:
                 host_list.append(host)
         counter = Counter(host_list)
         top_host, count = counter.most_common(1)[0]
-
         return (top_host,count) 
     
     
