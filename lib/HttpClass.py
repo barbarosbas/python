@@ -24,7 +24,7 @@ class MyHttpClass:
         return bl
     
     #private method, called from GetHttpFlowFromTCP & GetHttpFlowFromHTTP method
-    #verify whether flow is already in list or not
+
     def __GetHTTPFlowTunnel(self,packet):
         ip_src=packet[IP].src
         ip_dst=packet[IP].dst
@@ -81,7 +81,6 @@ class MyHttpClass:
                 host_list.append(host)
         counter = Counter(host_list)
         top_host, count = counter.most_common(1)[0]
-        print(top_host)
         return (top_host,count) 
     
     
